@@ -1,0 +1,1454 @@
+/* Dashboard Styles */
+
+.warp {padding: 20px 50px !important;}
+
+/* Modern Typography for Admin Pages */
+.wrap {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+}
+
+/* Headings */
+.wrap h1 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    color: #1d2327;
+}
+
+.wrap h2 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.3;
+/*    margin: 1.5rem 0 1rem;*/
+}
+
+.wrap h3 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 1rem 0;
+}
+
+/* Form Elements */
+.form-table {
+    font-size: 14px;
+}
+
+.form-table th {
+    font-weight: 500;
+    font-size: 14px;
+    color: #1d2327;
+}
+
+.form-table td {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: #2c3338 !important;
+}
+
+/* Labels and Help Text */
+label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1d2327;
+}
+
+.description {
+    font-size: 13px;
+    color: #646970;
+    font-style: normal;
+    line-height: 1.5;
+    margin-top: 4px;
+}
+
+/* Buttons */
+.button,
+.button-primary {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 2.15384615 !important;
+    min-height: 30px;
+}
+
+/* Tables */
+.wp-list-table {
+    font-size: 14px;
+}
+
+.wp-list-table th {
+    font-weight: 500;
+    color: #1d2327;
+}
+
+.wp-list-table td {
+    color: #2c3338;
+    line-height: 1.5;
+}
+
+/* Notices */
+.notice p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0.5em 0;
+}
+
+/* Card Styling */
+.card {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.card-header {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Select2 Overrides */
+.select2-container .select2-selection--single,
+.select2-container .select2-selection--multiple {
+    font-size: 14px !important;
+}
+
+.select2-results__option {
+    font-size: 14px !important;
+}
+
+/* Tabs */
+.nav-tab {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Custom Elements */
+.recipient-group h4 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.user-option label {
+    font-size: 14px;
+}
+
+.user-count {
+    font-size: 13px;
+}
+
+.selected-count {
+    font-size: 13px;
+}
+
+/* Preview Section */
+.email-preview-header h2 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.email-preview-subject {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.email-preview-content {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.email-preview-placeholder {
+    font-size: 14px;
+    color: #646970;
+}
+
+/* WordPress Editor */
+.wp-editor-container {
+    font-size: 14px;
+}
+
+.mce-content-body {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+/* Helper Classes */
+.text-small {
+    font-size: 13px;
+}
+
+.text-medium {
+    font-size: 14px;
+}
+
+.text-large {
+    font-size: 16px;
+}
+
+/* Status Badges */
+.badge {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Form Validation Messages */
+.form-error {
+    font-size: 13px;
+    color: #d63638;
+}
+
+.form-success {
+    font-size: 13px;
+    color: #00a32a;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 782px) {
+    .form-table, 
+    .form-table input[type="text"],
+    .form-table select {
+        font-size: 16px !important; /* Better for mobile touch targets */
+    }
+
+    .button,
+    .button-primary {
+        font-size: 14px !important;
+        min-height: 40px;
+    }
+}
+
+.assessment-360-dashboard .card {
+    margin-bottom: 20px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: all 0.3s ease;
+    max-width: 100% !important;
+}
+
+.assessment-360-dashboard .card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.assessment-360-dashboard .rating-scale .badge {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.2rem;
+    padding: 0;
+}
+
+.assessment-360-dashboard .progress {
+    height: 20px;
+    border-radius: 10px;
+}
+
+.assessment-360-dashboard .display-4 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.assessment-360-dashboard .stats-card {
+    min-height: 150px;
+}
+
+.assessment-360-dashboard .table-responsive {
+    margin-top: 1rem;
+}
+
+.assessment-360-dashboard .welcome-card {
+    background: linear-gradient(to right, #f8f9fa, #ffffff);
+    border-left: 4px solid #0d6efd;
+}
+/* Common styles */
+.assessment-form-container {
+    background: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+/*    max-width: 500px;*/
+    padding: 8px;
+}
+
+/* Table styles */
+.wp-list-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 3px;
+}
+
+.bg-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.bg-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* User specific styles */
+.assessors-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.form-check {
+    margin-bottom: 5px;
+}
+
+.nav-tab-wrapper {
+    margin-bottom: 20px;
+}
+
+/* Messages */
+.notice {
+    margin: 15px 0;
+}
+/* Assessment Results Styles */
+.assessment-results-container {
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.results-header {
+    margin-bottom: 30px;
+}
+
+.results-header .position {
+    color: #666;
+    font-size: 14px;
+}
+
+.summary-stats {
+    display: flex;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.stat-item {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-label {
+    display: block;
+    font-size: 18px;
+    font-weight: 500
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0073aa;
+}
+
+.topic-results {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.section-results {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.rating-distribution {
+    display: flex;
+    height: 20px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rating-bar {
+    height: 100%;
+    background: #0073aa;
+    transition: width 0.3s ease;
+}
+
+.comments-section {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.export-actions {
+    margin-top: 30px;
+    text-align: right;
+}
+
+/* User Grid Styles */
+.user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.user-card {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.user-card:hover {
+    border-color: #0073aa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.completion-info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+}
+#assessors-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.assessors-container {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.form-check {
+    margin-bottom: 8px;
+}
+
+.form-check-input {
+    margin-top: 0.3em;
+}
+
+.form-check-label {
+    margin-left: 8px;
+}
+
+/* Modern form styling using Bootstrap's .form-control inputs */
+form {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Headings and labels */
+form h2,
+form label {
+  font-weight: 600;
+  color: #333;
+}
+
+form label {
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs */
+.form-control {
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1rem;
+}
+
+/* Input focus effect */
+.form-control:focus {
+  border-color: #0d6efd; /* Bootstrap primary */
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Buttons */
+form .btn {
+  
+  /*  border-radius: 3px;
+  border-radius: 12px;padding: 3px 5px;font-size: 12px;*/
+  
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+/*
+.btn-sm {
+    font-size: 12px;
+}
+*/
+
+form .btn-primary {
+  background-color: #0d6efd;
+  border: none;
+}
+
+form .btn-primary:hover {
+  background-color: #0b5ed7;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+/* Optional: spacing between inputs */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+/* Modern table styling */
+.wp-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* Header styling */
+.wp-list-table thead {
+  background-color: #f8f9fa;
+  text-align: left;
+  font-weight: 600;
+}
+
+.wp-list-table thead th {
+  padding: 1rem;
+  border-bottom: 2px solid #dee2e6;
+  color: #212529;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700
+}
+
+/* Body rows */
+.wp-list-table tbody tr {
+  border-bottom: 1px solid #e9ecef;
+  transition: background-color 0.2s ease;
+}
+
+.wp-list-table tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Table cells */
+.wp-list-table td {
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
+}
+
+/* Zebra striping */
+.wp-list-table tbody tr:nth-child(odd) {
+  background-color: #fcfcfc;
+}
+
+/* Responsive scroll on smaller screens */
+@media (max-width: 768px) {
+  .wp-list-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+/* Base styling for form-check */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Hide the default checkbox */
+.form-check-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Checked state */
+.form-check-input:checked {
+  border-color: #0d6efd;
+  background-color: #0d6efd;
+}
+
+.form-check-input:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Focus style */
+.form-check-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+/* Label styling */
+.form-check-label {
+  font-size: 0.95rem;
+  color: #333;
+  user-select: none;
+  cursor: pointer;
+}
+
+
+/* Section Containers */
+.assessment-overview,
+.assessment-stats-container,
+.quick-actions {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Section Headings */
+.assessment-overview h2,
+.assessment-stats-container h2,
+.quick-actions h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+/* Stats Grid */
+.assessment-overview .stats-grid,
+.assessment-stats-container .stats-grid,
+.quick-actions .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Stats Cards */
+.assessment-overview .stats-card,
+.assessment-stats-container .stats-card,
+.quick-actions .stats-card {
+  background-color: #f1f3f5;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  transition: background-color 0.2s ease;
+  box-shadow: inset 0 0 0 1px #dee2e6;
+}
+
+.assessment-overview .stats-card:hover,
+.assessment-stats-container .stats-card:hover,
+.quick-actions .stats-card:hover {
+  background-color: #e9ecef;
+}
+
+/* Stat Value */
+.assessment-overview .stat-value,
+.assessment-stats-container .stat-value,
+.quick-actions .stat-value{
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0d6efd;
+  margin-top: 0.25rem;
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+.assessment-overview .stats-grid,
+.assessment-stats-container .stats-grid,
+.quick-actions .stats-grid {
+    grid-template-columns: 1fr;
+  }  
+}
+
+/* User List Tabs */
+.nav-tab-wrapper {
+    margin: 0 0 20px 0;
+    padding-top: 9px;
+    padding-bottom: 0;
+    line-height: inherit;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+.nav-tab {
+    float: left;
+    border: 1px solid #c3c4c7;
+    border-bottom: none;
+    margin-left: 0.5em;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 1.71428571;
+    font-weight: 600;
+    background: #dcdcde;
+    color: #50575e;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nav-tab-active {
+    margin-bottom: -1px;
+    background: #f0f0f1;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.nav-tab:hover,
+.nav-tab:focus {
+    background-color: #fff;
+    color: #1d2327;
+}
+
+.nav-tab-active:hover,
+.nav-tab-active:focus {
+    background-color: #f0f0f1;
+    color: #1d2327;
+}
+
+/* Table Styles */
+.wp-list-table .badge {
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.wp-list-table .bg-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.wp-list-table .bg-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+.disabled-field {
+    opacity: 0.7;
+}
+
+.disabled-field select {
+    background-color: #f0f0f0 !important;
+    cursor: not-allowed !important;
+}
+
+.disabled-field select:disabled {
+    background-color: #f0f0f0 !important;
+    cursor: not-allowed !important;
+}
+
+.field-note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    font-style: italic;
+}
+/* Organization Logo Styles */
+.organization-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.organization-logo img {
+    max-width: 200px;
+    height: auto;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Settings Page Styles */
+.current-logo {
+    margin-bottom: 15px;
+}
+
+.current-logo img {
+    max-width: 200px;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+/* Assessment Status Styles */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.active {
+    background: #28a745;
+    color: #fff;
+}
+
+.status-badge.disabled {
+    background: #6c757d;
+    color: #fff;
+}
+
+/* Button Styles */
+.button-small {
+    margin: 0 5px;
+}
+
+.button-small:first-child {
+    margin-left: 0;
+}
+
+.button-small:last-child {
+    margin-right: 0;
+}
+.form-preview-wrapper {
+    margin-top: 20px;
+}
+
+.form-preview-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-meta {
+    color: #666;
+    margin-top: 5px;
+}
+
+.preview-section {
+    margin-bottom: 30px;
+}
+
+.preview-section:last-child {
+    margin-bottom: 0;
+}
+
+.loading {
+    position: relative;
+    min-height: 100px;
+}
+
+.notice {
+    margin: 15px 0;
+}
+.loading-select {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.loading-select::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    border: 2px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.error-message {
+    color: #dc3232;
+    padding: 10px;
+    margin: 10px 0;
+    background: #fff5f5;
+    border-left: 4px solid #dc3232;
+}
+
+select:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.loading-indicator {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    width: 70%;
+    max-width: 600px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #666;
+}
+
+.close:hover {
+    color: #000;
+}
+
+select:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+/* User Profile Styles */
+.user-profile {
+    margin: 20px 0;
+}
+
+/* Card Styles */
+.card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    margin-bottom: 20px;
+    position: relative;
+    border-radius: 4px;
+}
+
+.card .title {
+    border-bottom: 1px solid #ccd0d4;
+    margin: 0;
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f8f9fa;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Table Styles */
+.form-table {
+    margin-top: 0;
+}
+
+.form-table th {
+    width: 150px;
+    padding: 15px 10px 15px 0;
+    font-weight: 600;
+}
+
+.form-table td {
+    padding: 15px 10px;
+}
+
+/* Status Badge Styles */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.status-badge.status-active {
+    background-color: #00a32a;
+    color: #fff;
+}
+
+.status-badge.status-inactive {
+    background-color: #cc1818;
+    color: #fff;
+}
+
+.status-badge.status-completed {
+    background-color: #00a32a;
+    color: #fff;
+}
+
+.status-badge.status-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+/* List Table Styles */
+.wp-list-table {
+    margin-top: 10px;
+}
+
+.wp-list-table th {
+    font-weight: 600;
+}
+
+.wp-list-table td, 
+.wp-list-table th {
+    vertical-align: middle;
+}
+
+/* Action Buttons */
+.button-small {
+    padding: 0 8px !important;
+    line-height: 22px !important;
+    height: 24px !important;
+    font-size: 11px !important;
+    margin: 0 !important;
+}
+
+/* Back Button */
+.page-title-action {
+    margin-left: 10px !important;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 782px) {
+    .form-table th {
+        width: 100%;
+        display: block;
+        padding-bottom: 0;
+    }
+    
+    .form-table td {
+        display: block;
+        padding-left: 0;
+    }
+    
+    .wp-list-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+PM
+provide better bootstrap stying for the user-profile.php page
+Ninja
+
+
+
+
+
+
+Ninja Agent
+/file
+
+I'll provide an enhanced version of user-profile.php with better Bootstrap styling:
+
+php
+
+
+<?php
+// Previous PHP code remains the same up to the HTML ?>
+
+<div class="wrap">
+    <div class="mb-4 d-sm-flex align-items-center justify-content-between">
+        <h1 class="wp-heading-inline h3 mb-3 mb-sm-0">
+            <i class="bi bi-person-circle me-2"></i>User Profile
+        </h1>
+        <a href="<?php echo esc_url(add_query_arg(['page' => 'assessment-360-users'], admin_url('admin.php'))); ?>" 
+           class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left me-1"></i>Back to Users
+        </a>
+    </div>
+
+    <?php if (isset($_GET['message'])): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo esc_html($_GET['message']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
+    <div class="row">
+        <!-- Basic Information Card -->
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-light">
+                    <h2 class="card-title h5 mb-0">
+                        <i class="bi bi-person me-2"></i>Basic Information
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="avatar-circle mb-3">
+                            <span class="avatar-initials">
+                                <?php echo esc_html(substr($user->first_name, 0, 1) . substr($user->last_name, 0, 1)); ?>
+                            </span>
+                        </div>
+                        <h3 class="h4 mb-1"><?php echo esc_html($user->first_name . ' ' . $user->last_name); ?></h3>
+                        <p class="text-muted mb-2"><?php echo esc_html($user->position_name ?? 'No Position'); ?></p>
+                        <span class="badge bg-<?php echo $user->status === 'active' ? 'success' : 'danger'; ?>">
+                            <?php echo esc_html(ucfirst($user->status)); ?>
+                        </span>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Email</span>
+                            <span><?php echo esc_html($user->email); ?></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Phone</span>
+                            <span><?php echo esc_html($user->phone ?? 'Not provided'); ?></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-muted">User Group</span>
+                            <span class="badge bg-primary">
+                                <?php echo esc_html($user->group_name ?? 'No Group Assigned'); ?>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <?php if ($is_peer): ?>
+                <!-- Assessors Section for Peers -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <h2 class="card-title h5 mb-0">
+                            <i class="bi bi-people me-2"></i>My Assessors
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <?php if (!empty($assessors)): ?>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Assessor Name</th>
+                                            <th>Group</th>
+                                            <th class="text-end">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($assessors as $assessor): ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="avatar-xs me-2">
+                                                            <?php echo substr($assessor->first_name, 0, 1); ?>
+                                                        </div>
+                                                        <?php echo esc_html($assessor->first_name . ' ' . $assessor->last_name); ?>
+                                                    </div>
+                                                </td>
+                                                <td><?php echo esc_html($assessor->group_name ?? 'No Group'); ?></td>
+                                                <td class="text-end">
+                                                    <?php
+                                                    $status = $assessment_manager->get_assessment_status(
+                                                        $assessor->id,
+                                                        $user_id,
+                                                        $current_assessment_id
+                                                    );
+                                                    $status_class = $status === 'completed' ? 'success' : 'warning';
+                                                    ?>
+                                                    <span class="badge bg-<?php echo $status_class; ?>">
+                                                        <?php echo esc_html(ucfirst($status)); ?>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="bi bi-people h1"></i>
+                                    <p class="mt-2">No assessors assigned yet.</p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Assessment Results Section -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h2 class="card-title h5 mb-0">
+                            <i class="bi bi-clipboard-data me-2"></i>Assessment Results
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <?php if (!empty($assessments)): ?>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Assessment</th>
+                                            <th>Period</th>
+                                            <th>Status</th>
+                                            <th class="text-end">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($assessments as $assessment): ?>
+                                            <tr>
+                                                <td><?php echo esc_html($assessment->name); ?></td>
+                                                <td>
+                                                    <small class="text-muted">
+                                                        <?php 
+                                                        echo esc_html(date('M j, Y', strtotime($assessment->start_date))) . ' - ' .
+                                                             esc_html(date('M j, Y', strtotime($assessment->end_date)));
+                                                        ?>
+                                                    </small>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-<?php echo $assessment->status === 'completed' ? 'success' : 'warning'; ?>">
+                                                        <?php echo esc_html(ucfirst($assessment->status)); ?>
+                                                    </span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <?php if ($assessment->status === 'completed'): ?>
+                                                        <a href="<?php echo esc_url(add_query_arg([
+                                                            'page' => 'assessment-360-results',
+                                                            'action' => 'view',
+                                                            'assessment_id' => $assessment->id,
+                                                            'user_id' => $user_id
+                                                        ], admin_url('admin.php'))); ?>" 
+                                                           class="btn btn-sm btn-outline-primary">
+                                                            <i class="bi bi-eye me-1"></i>View Results
+                                                        </a>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="bi bi-clipboard-x h1"></i>
+                                    <p class="mt-2">No assessment results available.</p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+            <?php else: ?>
+                <!-- Users to Assess Section -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h2 class="card-title h5 mb-0">
+                            <i class="bi bi-people-fill me-2"></i>Users to Assess
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <?php if (!empty($assessees)): ?>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th class="text-end">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($assessees as $assessee): ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="avatar-xs me-2">
+                                                            <?php echo substr($assessee->first_name, 0, 1); ?>
+                                                        </div>
+                                                        <?php echo esc_html($assessee->first_name . ' ' . $assessee->last_name); ?>
+                                                    </div>
+                                                </td>
+                                                <td><?php echo esc_html($assessee->position_name ?? 'No Position'); ?></td>
+                                                <td class="text-end">
+                                                    <?php
+                                                    $status = $assessment_manager->get_assessment_status(
+                                                        $user_id,
+                                                        $assessee->id,
+                                                        $current_assessment_id
+                                                    );
+                                                    $status_class = $status === 'completed' ? 'success' : 'warning';
+                                                    ?>
+                                                    <span class="badge bg-<?php echo $status_class; ?>">
+                                                        <?php echo esc_html(ucfirst($status)); ?>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="bi bi-people-fill h1"></i>
+                                    <p class="mt-2">No users assigned for assessment.</p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<!-- Add this CSS to your admin stylesheet -->
+<style>
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    background-color: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.avatar-initials {
+    font-size: 24px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.avatar-xs {
+    width: 32px;
+    height: 32px;
+    background-color: #e9ecef;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #495057;
+}
+
+.card {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    background-color: #f8f9fa;
+    padding: 1rem;
+}
+
+.table > :not(caption) > * > * {
+    padding: 1rem;
+}
+
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 500;
+}
+
+.btn-outline-primary {
+    border-width: 2px;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        margin: 0 -1rem;
+    }
+}
