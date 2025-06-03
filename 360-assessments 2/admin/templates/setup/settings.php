@@ -19,13 +19,18 @@
             </td>
         </tr>
         <tr>
-            <th><label for="org_logo">Organization Logo URL</label></th>
+            <th><label for="org_logo_upload">Organization Logo</label></th>
             <td>
-                <input type="url" 
+                <input type="hidden" 
                        id="org_logo" 
                        name="org_logo" 
-                       class="regular-text"
                        value="<?php echo esc_url(get_option('assessment_360_organization_logo', '')); ?>">
+                <button type="button" class="button" id="upload_logo_button">Upload Logo</button>
+                <div id="org_logo_preview" style="margin-top:10px;">
+                    <?php if (get_option('assessment_360_organization_logo', '')): ?>
+                        <img src="<?php echo esc_url(get_option('assessment_360_organization_logo', '')); ?>" alt="Logo preview" style="max-height:80px;">
+                    <?php endif; ?>
+                </div>
             </td>
         </tr>
         <?php wp_enqueue_editor(); ?>
@@ -88,3 +93,27 @@
         </div>
     </div>
 </form>
+
+<script>
+jQuery(document).ready(function($){
+    var frame;
+    $('#upload_logo_button').on('click', function(e){
+        e.preventDefault();
+        if (frame) {
+            frame.open();
+            return;
+        }
+        frame = wp.media({
+            title: 'Select or Upload Logo',
+            button: { text: 'Use this logo' },
+            multiple: false
+        });
+        frame.on('select', function(){
+            var attachment = frame.state().get('selection').first().toJSON();
+            $('#org_logo').val(attachment.url);
+            $('#org_logo_preview').html('<img src="' + attachment.url + '" alt="Logo preview" style="max-height:80px;">');
+        });
+        frame.open();
+    });
+});
+</script>
