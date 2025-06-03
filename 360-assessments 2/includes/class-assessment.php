@@ -92,23 +92,26 @@ class Assessment_360_Assessment {
 
     public function create_assessment($data) {
         global $wpdb;
-        
+    
+        // Use provided status or default to 'draft'
+        $status = isset($data['status']) ? $data['status'] : 'draft';
+    
         $result = $wpdb->insert(
             $wpdb->prefix . '360_assessments',
             array(
-                'name' => $data['name'],
+                'name'        => $data['name'],
                 'description' => $data['description'],
-                'start_date' => $data['start_date'],
-                'end_date' => $data['end_date'],
-                'status' => 'active'
+                'start_date'  => $data['start_date'],
+                'end_date'    => $data['end_date'],
+                'status'      => $status
             ),
             array('%s', '%s', '%s', '%s', '%s')
         );
-
+    
         if ($result === false) {
             return new WP_Error('insert_failed', 'Failed to create assessment');
         }
-
+    
         return $wpdb->insert_id;
     }
 
