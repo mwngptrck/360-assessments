@@ -75,6 +75,9 @@ function render_setup_page() {
     if (!current_user_can('manage_options')) {
         wp_die(__('You do not have sufficient permissions to access this page.'));
     }
+
+    // Enqueue the media uploader scripts so wp.media works!
+    wp_enqueue_media();
     require_once ASSESSMENT_360_PLUGIN_DIR . 'admin/templates/setup.php';
 }
 
