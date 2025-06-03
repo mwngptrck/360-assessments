@@ -3,7 +3,6 @@
  * 360 Assessments Database Functions
  * 
  * Contains all logic for creating, updating, and uninstalling plugin-specific database tables and options.
- * Migrated from the original main plugin file.
  */
 
 /**
@@ -11,35 +10,115 @@
  */
 function assessment_360_activate($network_wide) {
     global $wpdb;
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-    try {
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    $charset_collate = $wpdb->get_charset_collate();
+    $tables = [
+        // User Groups Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_user_groups (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            group_name varchar(255) NOT NULL,
+            description text,
+            is_department tinyint(1) NOT NULL DEFAULT 0,
+            status enum('active','inactive') NOT NULL DEFAULT 'active',
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            KEY status (status),
+            KEY is_department (is_department)
+        ) $charset_collate;",
 
-        // Initialize managers
-        $user_manager = Assessment_360_User_Manager::get_instance();
-        $group_manager = Assessment_360_Group_Manager::get_instance();
-        $position = Assessment_360_Position::get_instance();
-        
-        // Create or update assessments table
-        $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_assessments (
+        // Positions Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_positions (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            name varchar(255) NOT NULL,
+            description text,
+            status enum('active','inactive') NOT NULL DEFAULT 'active',
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            KEY status (status)
+        ) $charset_collate;",
+
+        // Users Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_users (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            first_name varchar(100) NOT NULL,
+            last_name varchar(100) NOT NULL,
+            email varchar(255) NOT NULL,
+            password varchar(255) NOT NULL,
+            position_id bigint(20) DEFAULT NULL,
+            group_id bigint(20) DEFAULT NULL,
+            department_id bigint(20) DEFAULT NULL,
+            status enum('active','inactive','deleted') NOT NULL DEFAULT 'active',
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            UNIQUE KEY email (email),
+            KEY position_id (position_id),
+            KEY group_id (group_id),
+            KEY status (status)
+        ) $charset_collate;",
+
+        // Topics Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_topics (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            name varchar(255) NOT NULL,
+            description text,
+            status enum('active','inactive') NOT NULL DEFAULT 'active',
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            KEY status (status)
+        ) $charset_collate;",
+
+        // Sections Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_sections (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            topic_id bigint(20) NOT NULL,
+            name varchar(255) NOT NULL,
+            description text,
+            status enum('active','inactive') NOT NULL DEFAULT 'active',
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            KEY topic_id (topic_id),
+            KEY status (status)
+        ) $charset_collate;",
+
+        // Questions Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_questions (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            section_id bigint(20) NOT NULL,
+            question_text text NOT NULL,
+            question_order int(11) NOT NULL DEFAULT 0,
+            is_mandatory tinyint(1) NOT NULL DEFAULT 1,
+            has_comment_box tinyint(1) NOT NULL DEFAULT 0,
+            status enum('active','inactive') NOT NULL DEFAULT 'active',
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            KEY section_id (section_id),
+            KEY status (status)
+        ) $charset_collate;",
+
+        // Assessments Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_assessments (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             name varchar(255) NOT NULL,
             description text,
             status enum('active','completed','deleted') NOT NULL DEFAULT 'active',
+            start_date date DEFAULT NULL,
+            end_date date DEFAULT NULL,
             created_at datetime DEFAULT CURRENT_TIMESTAMP,
             completed_at datetime DEFAULT NULL,
-            PRIMARY KEY  (id)
-        ) {$wpdb->get_charset_collate()};";
-        dbDelta($sql);
+            created_by bigint(20) DEFAULT NULL,
+            PRIMARY KEY  (id),
+            KEY status (status)
+        ) $charset_collate;",
 
-        // Create or update responses table
-        $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_assessment_responses (
+        // Assessment Responses Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_assessment_responses (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             assessment_id bigint(20) NOT NULL,
             assessor_id bigint(20) NOT NULL,
             assessee_id bigint(20) NOT NULL,
             question_id bigint(20) NOT NULL,
-            rating int(11),
+            rating int(11) DEFAULT NULL,
             comment text,
             status enum('pending','completed') NOT NULL DEFAULT 'pending',
             created_at datetime DEFAULT CURRENT_TIMESTAMP,
@@ -48,58 +127,63 @@ function assessment_360_activate($network_wide) {
             KEY assessment_id (assessment_id),
             KEY assessor_id (assessor_id),
             KEY assessee_id (assessee_id),
-            KEY question_id (question_id)
-        ) {$wpdb->get_charset_collate()};";
-        dbDelta($sql);
-        
-        // Create required tables via manager classes
-        $user_manager->verify_table_structure();
-        $group_manager->verify_table_structure();
-        $position->verify_table_structure();
-        
-        // Create Peers group if it doesn't exist
-        $peers_group = $group_manager->get_peers_group();
-        if (!$peers_group) {
-            $group_manager->create_group([
-                'group_name' => 'Peers',
-                'description' => 'Main peer group for assessments',
-                'is_department' => 0
-            ]);
-        }
-        
-        // Set default email templates if not set
-        if (!get_option('assessment_360_welcome_email')) {
-            update_option('assessment_360_welcome_email', 
-                "Welcome to the 360° Assessment System!\n\n" .
-                "Your account has been created with the following credentials:\n" .
-                "Email: {email}\n" .
-                "Password: {password}\n\n" .
-                "Please login at: {login_url}"
-            );
-        }
-        
-        if (!get_option('assessment_360_reminder_email')) {
-            update_option('assessment_360_reminder_email',
-                "Hello {first_name},\n\n" .
-                "This is a reminder that you have pending assessments to complete.\n" .
-                "Please login at {login_url} to complete your assessments.\n\n" .
-                "Thank you."
-            );
-        }
-        
-        // Set plugin version
-        add_option('assessment_360_version', '1.0.0');
-        
-        // Set flag for setup wizard
-        add_option('assessment_360_do_setup', 'yes');
+            KEY question_id (question_id),
+            KEY status (status)
+        ) $charset_collate;",
 
-        // Create required pages
-        assessment_360_create_pages();
-        
-    } catch (Exception $e) {
-        wp_die('Error during plugin activation: ' . esc_html($e->getMessage()));
+        // User Relationships Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_user_relationships (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            assessor_id bigint(20) NOT NULL,
+            assessee_id bigint(20) NOT NULL,
+            relationship_type enum('peer','supervisor','subordinate','self') NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            UNIQUE KEY unique_relationship (assessor_id, assessee_id),
+            KEY assessor_id (assessor_id),
+            KEY assessee_id (assessee_id)
+        ) $charset_collate;",
+    ];
+
+    // Create all tables
+    foreach ($tables as $sql) {
+        dbDelta($sql);
     }
+
+    // Peers group creation (as before)
+    $group_manager = Assessment_360_Group_Manager::get_instance();
+    $peers_group = $group_manager->get_peers_group();
+    if (!$peers_group) {
+        $group_manager->create_group([
+            'group_name' => 'Peers',
+            'description' => 'Main peer group for assessments',
+            'is_department' => 0
+        ]);
+    }
+
+    // Set default email templates if not set
+    if (!get_option('assessment_360_welcome_email')) {
+        update_option('assessment_360_welcome_email', 
+            "Welcome to the 360° Assessment System!\n\n" .
+            "Your account has been created with the following credentials:\n" .
+            "Email: {email}\n" .
+            "Password: {password}\n\n" .
+            "Please login at: {login_url}"
+        );
+    }
+    if (!get_option('assessment_360_reminder_email')) {
+        update_option('assessment_360_reminder_email',
+            "Hello {first_name},\n\n" .
+            "This is a reminder that you have pending assessments to complete.\n" .
+            "Please login at {login_url} to complete your assessments.\n\n" .
+            "Thank you."
+        );
+    }
+    add_option('assessment_360_version', '1.0.0');
+    add_option('assessment_360_do_setup', 'yes');
+    assessment_360_create_pages();
 }
+
 register_activation_hook(ASSESSMENT_360_PLUGIN_FILE, 'assessment_360_activate');
 
 /**
