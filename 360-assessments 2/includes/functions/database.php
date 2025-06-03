@@ -26,6 +26,21 @@ function assessment_360_activate($network_wide) {
             KEY status (status),
             KEY is_department (is_department)
         ) $charset_collate;",
+        
+        //user instances
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_assessment_instances (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            assessment_id mediumint(9) NOT NULL,
+            assessor_id mediumint(9) NOT NULL,
+            assessee_id mediumint(9) NOT NULL,
+            status varchar(50) DEFAULT 'pending',
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            completed_at datetime DEFAULT NULL,
+            PRIMARY KEY  (id),
+            KEY assessment_id (assessment_id),
+            KEY assessor_id (assessor_id),
+            KEY assessee_id (assessee_id)
+        ) $charset_collate;";,
 
         // Positions Table
         "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_positions (
@@ -143,6 +158,45 @@ function assessment_360_activate($network_wide) {
             KEY assessor_id (assessor_id),
             KEY assessee_id (assessee_id)
         ) $charset_collate;",
+        
+        // Password Resets Table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_password_resets (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            user_id mediumint(9) NOT NULL,
+            token varchar(255) NOT NULL,
+            expiry datetime NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            KEY user_id (user_id),
+            FOREIGN KEY (user_id) REFERENCES {$wpdb->prefix}360_users(id) ON DELETE CASCADE
+        ) $charset_collate;",
+
+        // User Assessors table
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_user_assessors (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            user_id mediumint(9) NOT NULL,
+            assessor_id mediumint(9) NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            UNIQUE KEY user_assessor (user_id, assessor_id),
+            KEY user_id (user_id),
+            KEY assessor_id (assessor_id)
+        ) $charset_collate;",
+        
+        //User activity log
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}360_activity_log (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            user_id mediumint(9) NOT NULL,
+            action varchar(50) NOT NULL,
+            details text,
+            ip_address varchar(45),
+            created_at datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id),
+            KEY user_id (user_id),
+            KEY action (action),
+            KEY created_at (created_at)
+        ) $charset_collate;";
+
     ];
 
     // Create all tables
