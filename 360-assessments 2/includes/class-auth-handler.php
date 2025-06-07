@@ -1,7 +1,7 @@
 <?php
 class Assessment_360_Auth_Handler {
     private static $instance = null;
-    
+
     public static function get_instance() {
         if (null === self::$instance) {
             self::$instance = new self();
@@ -10,139 +10,125 @@ class Assessment_360_Auth_Handler {
     }
 
     public function init() {
-        add_action('admin_post_nopriv_assessment_360_login', array($this, 'handle_login'));
-        add_action('admin_post_assessment_360_logout', array($this, 'handle_logout'));
+        // Plugin user login/logout
+        add_action('admin_post_nopriv_assessment_360_login', array($this, 'handle_plugin_login'));
+        add_action('admin_post_assessment_360_logout', array($this, 'handle_plugin_logout'));
+
+        // WordPress user login/logout (for reference, not used in plugin forms)
+        add_action('admin_post_nopriv_wp_login', array($this, 'handle_wp_login'));
+        add_action('admin_post_wp_logout', array($this, 'handle_wp_logout'));
     }
 
-    public function handle_login() {
-        
-        error_log('handle_login called');
+    /**
+     * Handles plugin user login (from plugin's login form)
+     */
+    public function handle_plugin_login() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-        if (!isset($_POST['assessment_360_login_nonce']) || 
+        // Uncomment for debugging
+        // die('Handler is being called!');
+        error_log('Assessment 360: handle_plugin_login triggered');
+
+
+        if (!isset($_POST['assessment_360_login_nonce']) ||
             !wp_verify_nonce($_POST['assessment_360_login_nonce'], 'assessment_360_login_action')) {
-            $this->redirect_to_login('Invalid security token');
+            $this->redirect_to_plugin_login('Invalid security token');
         }
 
         $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
         $password = isset($_POST['password']) ? $_POST['password'] : '';
 
         if (empty($email) || empty($password)) {
-            $this->redirect_to_login('Please enter both email and password');
+            $this->redirect_to_plugin_login('Please enter both email and password');
         }
 
-        try {
-           $user_manager = Assessment_360_User_Manager::get_instance();
-            $user = $user_manager->get_user_by_email($email);
+        global $wpdb;
+        $table = $wpdb->prefix . '360_users';
+        $user = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE email = %s", $email));
 
-            if (!$user) {
-                $this->redirect_to_login('Invalid email or password');
-            }
-
-            // Verify password
-            if (!$this->verify_password($password, $user->password)) {
-                $this->redirect_to_login('Invalid email or password');
-            }
-
-            // Check if user is active
-            if ($user->status !== 'active') {
-                $this->redirect_to_login('Your account is not active. Please contact administrator.');
-            }
-
-            // Standardize user data
-            $user = $this->standardize_user_data($user);
-
-            // Store user data in session
-            $_SESSION['assessment_360_user'] = $user;
-            $_SESSION['last_activity'] = time();
-
-            // Update last login
-            $user_manager->update_last_login($user->id);
-
-            // Log activity
-            $this->log_activity($user->id, 'login', 'User logged in successfully');
-
-            // Redirect to dashboard
-            wp_redirect(home_url('/360-assessment-dashboard/'));
-            exit;
-
-        } catch (Exception $e) {
-            $this->redirect_to_login('An error occurred. Please try again.');
+        if (!$user) {
+            $this->redirect_to_plugin_login('No user found with that email address');
         }
+
+        // Make sure your password is hashed with password_hash()
+        if (!password_verify($password, $user->password)) {
+            $this->redirect_to_plugin_login('Invalid login credentials');
+        }
+
+        $_SESSION['assessment_360_user_id'] = $user->id;
+
+        wp_redirect(home_url('/360-assessment-dashboard/'));
+        exit;
     }
 
-    public function handle_logout() {
-        // Verify nonce
-        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'assessment_360_logout')) {
-            wp_die('Invalid security token');
+    /**
+     * Handles plugin user logout
+     */
+    public function handle_plugin_logout() {
+        $this->start_plugin_session();
+        if (isset($_SESSION['assessment_360_user_id'])) {
+            $user_id = $_SESSION['assessment_360_user_id'];
+            $this->log_activity($user_id, 'plugin_logout', 'Plugin user logged out successfully');
         }
-
-        // Clear session
-        if (session_id()) {
-            // Log activity before clearing session
-            if (isset($_SESSION['assessment_360_user'])) {
-                $this->log_activity(
-                    $_SESSION['assessment_360_user']->id,
-                    'logout',
-                    'User logged out successfully'
-                );
-            }
-
-            session_destroy();
-            $_SESSION = array();
-            
-            // Delete session cookie
-            if (isset($_COOKIE[session_name()])) {
-                setcookie(session_name(), '', time() - 3600, '/');
-            }
-        }
-
-        // Redirect to login page
+        unset($_SESSION['assessment_360_user_id']);
         wp_redirect(home_url('/360-assessment-login/'));
         exit;
     }
 
-    private function standardize_user_data($user) {
-        if (!is_object($user)) {
-            return null;
+    /**
+     * Handles WordPress user login (not used by plugin's login form)
+     */
+    public function handle_wp_login() {
+        if (!isset($_POST['wp_login_nonce']) ||
+            !wp_verify_nonce($_POST['wp_login_nonce'], 'wp_login_action')) {
+            $this->redirect_to_wp_login('Invalid security token');
         }
 
-        $standardized = new stdClass();
-        
-        // Essential properties
-        $standardized->id = $user->id ?? 0;
-        $standardized->ID = $standardized->id; // WordPress compatibility
-        $standardized->first_name = $user->first_name ?? '';
-        $standardized->firstName = $standardized->first_name; // Legacy compatibility
-        $standardized->last_name = $user->last_name ?? '';
-        $standardized->lastName = $standardized->last_name; // Legacy compatibility
-        $standardized->email = $user->email ?? '';
-        
-        // Optional properties
-        $standardized->phone = $user->phone ?? '';
-        $standardized->position_id = $user->position_id ?? 0;
-        $standardized->group_id = $user->group_id ?? 0;
-        $standardized->status = $user->status ?? 'active';
-        $standardized->position_name = $user->position_name ?? '';
-        $standardized->group_name = $user->group_name ?? '';
-        
-        // System properties
-        $standardized->created_at = $user->created_at ?? current_time('mysql');
-        $standardized->last_login = $user->last_login ?? null;
+        $username = isset($_POST['username']) ? sanitize_user($_POST['username']) : '';
+        $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-        return $standardized;
-    }
-
-    private function verify_password($password, $hash) {
-        // Use WordPress password hashing if available
-        if (function_exists('wp_check_password')) {
-            return wp_check_password($password, $hash);
+        if (empty($username) || empty($password)) {
+            $this->redirect_to_wp_login('Please enter both username and password');
         }
-        
-        // Fallback to MD5 (you might want to use a stronger hashing method)
-        return md5($password) === $hash;
+
+        $credentials = array(
+            'user_login'    => $username,
+            'user_password' => $password,
+            'remember'      => true,
+        );
+
+        $user = wp_signon($credentials, is_ssl());
+
+        if (is_wp_error($user)) {
+            $this->redirect_to_wp_login('Invalid login credentials');
+        }
+
+        // Log login activity
+        $this->log_activity($user->ID, 'wp_login', 'WP user logged in successfully');
+
+        wp_redirect(admin_url());
+        exit;
     }
 
-    private function redirect_to_login($error_message) {
+    /**
+     * Handles WordPress user logout (not used by plugin's logout button)
+     */
+    public function handle_wp_logout() {
+        if (is_user_logged_in()) {
+            $user_id = get_current_user_id();
+            $this->log_activity($user_id, 'wp_logout', 'WP user logged out successfully');
+        }
+        wp_logout();
+        wp_redirect(wp_login_url());
+        exit;
+    }
+
+    /**
+     * Redirect helper for plugin login page with error messages
+     */
+    private function redirect_to_plugin_login($error_message) {
         wp_redirect(add_query_arg(
             'error',
             urlencode($error_message),
@@ -151,10 +137,25 @@ class Assessment_360_Auth_Handler {
         exit;
     }
 
+    /**
+     * Redirect helper for WordPress login page with error messages
+     * (for reference, not used by plugin forms)
+     */
+    private function redirect_to_wp_login($error_message) {
+        wp_redirect(add_query_arg(
+            'error',
+            urlencode($error_message),
+            wp_login_url()
+        ));
+        exit;
+    }
+
+    /**
+     * Log activity for both WP and plugin users
+     */
     private function log_activity($user_id, $action, $details = '') {
         try {
             global $wpdb;
-            
             $data = array(
                 'user_id' => $user_id,
                 'action' => $action,
@@ -162,21 +163,51 @@ class Assessment_360_Auth_Handler {
                 'ip_address' => $_SERVER['REMOTE_ADDR'],
                 'created_at' => current_time('mysql')
             );
-            
             $wpdb->insert(
                 $wpdb->prefix . '360_activity_log',
                 $data,
                 array('%d', '%s', '%s', '%s', '%s')
             );
-
-            
-
         } catch (Exception $e) {
-            //Error here
+            // Optionally log this error elsewhere
         }
+    }
+
+    /**
+     * Starts a session for plugin user authentication, if not already started
+     */
+    private function start_plugin_session() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    /**
+     * Checks if a plugin user is logged in (utility for templates)
+     */
+    public static function is_plugin_user_logged_in() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        return !empty($_SESSION['assessment_360_user_id']);
+    }
+
+    /**
+     * Gets the currently logged-in plugin user (or null)
+     */
+    public static function get_plugin_user() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (empty($_SESSION['assessment_360_user_id'])) {
+            return null;
+        }
+        global $wpdb;
+        $table = $wpdb->prefix . '360_users';
+        $user = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table WHERE id = %d", $_SESSION['assessment_360_user_id']));
+        return $user;
     }
 }
 
-// Initialize the auth handler
-//add_action('init', array(Assessment_360_Auth_Handler::get_instance(), 'init'));
+// Initialize the handler
 Assessment_360_Auth_Handler::get_instance()->init();
