@@ -10,20 +10,6 @@ Text Domain: 360-degree-assessments
 
 if (!defined('ABSPATH')) exit;
 
-//USE
-// Session handling - separate frontend (custom) from backend (WP)
-//add_action('init', function() {
-//    if (!session_id() && !headers_sent()) {
-//        session_start();
-//    }
-//}, 1);
-
-//OR
-//if (!session_id() && !headers_sent()) {
-//    session_start();
-//}
-
-//OR
 add_action('init', function() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -51,21 +37,8 @@ spl_autoload_register(function ($class) {
     if (file_exists($file)) require_once $file;
 });
 
-// Include core class files
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-user-manager.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-group-manager.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-assessment-manager.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-template-loader.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-settings-manager.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-assessment.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-position.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-topic.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-section.php';
-require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-question.php';
-
 //login authentication
 require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/class-auth-handler.php';
-//Assessment_360_Auth_Handler::get_instance()->init();
 
 require_once ASSESSMENT_360_PLUGIN_DIR . 'includes/functions.php';
 // Include modularized function/handler files
